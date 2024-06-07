@@ -15,7 +15,7 @@
 #include <memory>
 #include <utility>
 #include <algorithm>
-#include <cstring>
+#include <string>
 #include <iostream>
 #include <iomanip>
 
@@ -30,6 +30,7 @@ FFTWConnector::FFTWConnector(dbCommon *prec)
     : inst(nullptr)
     , prec(prec)
     , sigtype(None)
+    , trftype(R2c_1d)
     , offset(0)
 {}
 
@@ -58,8 +59,8 @@ FFTWConnector::get_ioint(int cmd, dbCommon *prec, IOSCANPVT *io)
 void
 FFTWConnector::show(const unsigned int verbosity, const unsigned char indent) const
 {
-    const char *type = FFTWConnector::SignalTypeName(sigtype);
-    size_t tlen = strlen(type);
+    const std::string type = FFTWConnector::SignalTypeName(sigtype);
+    size_t tlen = type.size();
     std::cout << "\n"
               << std::setw(indent + tlen) << type << std::setw(15 - tlen) << std::left << ": "
               << std::right << prec->name;

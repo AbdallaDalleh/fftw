@@ -17,6 +17,7 @@
 
 #include <memory>
 #include <vector>
+#include <string>
 
 #include <dbScan.h>
 #include <dbCommon.h>
@@ -57,7 +58,7 @@ public:
         R2c_1d = 0,
     };
 
-    static inline const char *
+    static inline const std::string
     SignalTypeName(const SignalType s)
     {
         switch (s) {
