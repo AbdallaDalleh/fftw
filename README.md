@@ -1,5 +1,5 @@
 <a target="_blank" href="http://semver.org">![Version][badge.version]</a>
-<a target="_blank" href="https://www.codacy.com/gh/ralphlange/fftw">![Codacy grade][badge.codacy]</a>
+<a target="_blank" href="https://app.codacy.com/gh/ralphlange/fftw">![Codacy grade][badge.codacy]</a>
 
 # fftw - EPICS Device Support for the FFTW Library
 
