@@ -513,10 +513,15 @@ write_double_arr(REC *prec)
     {
         bool failed = true;
         if (conn->sigtype == FFTWConnector::InputReal) {
-            if (prec->tpro > 1)
-                std::cerr << prec->name << ": set input (real)" << std::endl;
-            conn->setNextInputValue(prec->bptr, prec->nord);
-            failed = false;
+            if (!prec->nord) {
+                if (prec->tpro > 1)
+                    std::cerr << prec->name << ": input (real) array is empty" << std::endl;
+            } else {
+                if (prec->tpro > 1)
+                    std::cerr << prec->name << ": set input (real) [" << prec->nord << "]" << std::endl;
+                conn->setNextInputValue(prec->bptr, prec->nord);
+                failed = false;
+            }
         }
         if (!failed && conn->inst->triggerSrc == conn) {
             conn->setTimestamp(prec->time);
@@ -538,10 +543,16 @@ write_double_array_asub(aSubRecord *prec)
     {
         bool failed = true;
         if (conn->sigtype == FFTWConnector::InputReal) {
-            if (prec->tpro > 1)
-                std::cerr << prec->name << ": set input (real) [" << prec->nea << "]" << std::endl;
-            conn->setNextInputValue(prec->a, prec->nea);
-            failed = false;
+            if (!prec->nea) {
+                if (prec->tpro > 1)
+                    std::cerr << prec->name << ": input (real) array read from INPA is empty" << std::endl;
+            } else {
+                if (prec->tpro > 1)
+                    std::cerr << prec->name << ": set input (real) [" << prec->nea << "]"
+                              << std::endl;
+                conn->setNextInputValue(prec->a, prec->nea);
+                failed = false;
+            }
         }
         if (!failed && conn->inst->triggerSrc == conn) {
             conn->setTimestamp(prec->time);
