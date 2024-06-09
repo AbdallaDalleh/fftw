@@ -12,6 +12,7 @@ include $(TOP)/configure/CONFIG
 # databases, templates, substitutions like this
 DB += single.db
 DB += single_asub.db
+DB += single_asub_issue001.db
 
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add

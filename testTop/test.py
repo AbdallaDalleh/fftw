@@ -113,5 +113,18 @@ class TestFFTW(unittest.TestCase):
         self.assertTrue(np.allclose(result.imag, outi.get()))
         self.assertTrue(np.allclose(result.real, outr.get()))
 
+    def test_asub_issue001(self):
+        """
+        Test using aSub on an empty input array
+        """
+        inp = PV('A4:inp-sub')
+        inpPROC = PV('A4:inp-sub.PROC')
+
+        inpPROC.put('1', wait=True)
+        v = inp.get(use_monitor=False, timeout=1.0)
+
+        self.assertEqual(inp.severity, 3) # INVALID
+        self.assertEqual(inp.status, 2)   # WRITE
+
 if __name__ == '__main__':
     unittest.main()
