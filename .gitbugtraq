@@ -1,0 +1,4 @@
+[bugtraq]
+  url = https://github.com/ralphlange/fftw/issues/%BUGID%
+  loglinkregex = "#\\d+"
+  logregex = \\d+
