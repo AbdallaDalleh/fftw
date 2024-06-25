@@ -87,14 +87,17 @@ bool
 FFTWCalc::apply_window()
 {
     bool window_changed = false;
+    WindowType wt = wintype;
 
     if (redo_plan) {
         window_changed = true;
         window.resize(ntime);
-        switch (wintype) {
+        // Can't apply window function with array size 1
+        if (ntime <= 1)
+            wt = None;
+        switch (wt) {
         case Hann: {
             // Hann window
-            assert(ntime > 1);
             double fact = PI / (ntime - 1);
             for (size_t n = 0, N = window.size(); n < N; n++) {
                 double temp = sin(fact * n);
