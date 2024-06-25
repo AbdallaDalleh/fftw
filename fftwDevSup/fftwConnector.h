@@ -46,6 +46,7 @@ public:
         SetWindowType,
         SetSampleFreq,
         ExecutionTime,
+        ExecutionCount,
         InputReal,
         OutputReal,
         OutputImag,
@@ -68,6 +69,8 @@ public:
             return "SetWindowType";
         case SetSampleFreq:
             return "SetSampleFreq";
+        case ExecutionCount:
+            return "ExecutionCount";
         case ExecutionTime:
             return "ExecutionTime";
         case InputReal:
@@ -124,6 +127,9 @@ public:
 
     // Get the runtime
     double getRuntime();
+
+    // Get the execution count
+    int getExecutionCount();
 
     // Set offset from beginning
     void setOffset(const size_t offset);

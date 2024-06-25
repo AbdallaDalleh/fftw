@@ -23,6 +23,7 @@
 #include <dbScan.h>
 #include <epicsThreadPool.h>
 #include <epicsTime.h>
+#include <epicsAtomic.h>
 
 #include "fftwConnector.h"
 #include "fftwCalc.h"
@@ -81,6 +82,7 @@ public:
 
     double lasttime;
     bool valid;
+    int calcCount;
 
     // Pointers to the trigger, the list of inputs and outputs
     FFTWConnector *triggerSrc;
@@ -100,6 +102,9 @@ public:
 
     // Show method to print the setup
     void show(const unsigned int verbosity) const;
+
+    // Get the execution counter value
+    int getCount() const { return epicsAtomicGetIntT(&calcCount); }
 
     // Set minimum output size (largest connected array record)
     void setRequiredOutputSize(const FFTWConnector::SignalType type, const epicsUInt32 size);

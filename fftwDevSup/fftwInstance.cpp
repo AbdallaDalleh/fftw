@@ -17,6 +17,7 @@
 
 #include <dbScan.h>
 #include <epicsThread.h>
+#include <epicsAtomic.h>
 
 #include "fftwConnector.h"
 #include "fftwInstance.h"
@@ -55,6 +56,7 @@ FFTWInstance::FFTWInstance(const std::string &name)
     : name(name)
     , lasttime(0.0)
     , valid(false)
+    , calcCount(0)
     , triggerSrc(nullptr)
     , useReal(false)
     , useImag(false)
@@ -99,6 +101,7 @@ FFTWInstance::calculate()
     }
 
     epicsTimeStamp ts = triggerSrc->getTimestamp();
+    epicsAtomicIncrIntT(&calcCount);
 
     bool window_changed = fftw.apply_window();
     runtime.maybeSnap("calculate() prepare", 5e-3);
@@ -253,7 +256,8 @@ FFTWInstance::show(const unsigned int verbosity) const
     std::cout << "\nInput size: " << fftw.input_sz
               << "\nWindow type: " << FFTWCalc::WindowTypeName(fftw.wintype)
               << "\nSample freq: " << fftw.fsamp
-              << "\nExec time: " << lasttime;
+              << "\nExec time: " << lasttime
+              << "\nExec count: " << calcCount;
     std::cout << std::endl;
 }
 

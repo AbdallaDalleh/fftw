@@ -40,6 +40,7 @@
 #include <aaoRecord.h>
 #include <aaiRecord.h>
 #include <aSubRecord.h>
+#include <longinRecord.h>
 
 #include "fftwVersion.h"
 #include "fftwConnector.h"
@@ -165,6 +166,8 @@ signalTypeIndex(const std::string &name)
         return FFTWConnector::SetSampleFreq;
     else if (name == "exectime")
         return FFTWConnector::ExecutionTime;
+    else if (name == "execcount")
+        return FFTWConnector::ExecutionCount;
     else if (name == "output-real")
         return FFTWConnector::OutputReal;
     else if (name == "output-imag")
@@ -273,6 +276,7 @@ parseLink(dbCommon *prec, const char *config)
                     conn->inst->useWindow = true;
                     break;
                 case FFTWConnector::ExecutionTime:
+                case FFTWConnector::ExecutionCount:
                     conn->inst->outputs.push_back(conn.get());
                     break;
                 case FFTWConnector::None:
@@ -609,6 +613,28 @@ read_double_arr(REC *prec)
     CATCH(__FUNCTION__)
 }
 
+template<typename REC>
+long
+read_long(REC *prec)
+{
+    TRY
+    {
+        bool failed = true;
+
+        if (conn->sigtype == FFTWConnector::ExecutionCount) {
+            prec->val = conn->getExecutionCount();
+            prec->udf = 0;
+            prec->time = conn->getTimestamp();
+            failed = false;
+        }
+        if (failed) {
+            (void) recGblSetSevr(prec, READ_ALARM, INVALID_ALARM);
+            return S_dev_badRequest;
+        }
+        return 0;
+    }
+    CATCH(__FUNCTION__)
+}
 
 // Device Support jump tables
 
@@ -636,6 +662,7 @@ DEVSUPN(  devAOfftw,     ao,            get_iointr,     double,     write)
 DEVSUPN(  devAIfftw,     ai,            get_iointr,     double,      read)
 DEVSUPI( devAAOfftw,    aao, write_arr, get_iointr, double_arr,     write)
 DEVSUPI( devAAIfftw,    aai,  read_arr, get_iointr, double_arr,      read)
+DEVSUPN(  devLIfftw, longin,            get_iointr,       long,      read)
 
 #include <epicsExport.h>
 #include <registryFunction.h>
@@ -658,6 +685,7 @@ extern "C" {
     epicsExportAddress(dset, devAIfftw);
     epicsExportAddress(dset, devAAOfftw);
     epicsExportAddress(dset, devAAIfftw);
+    epicsExportAddress(dset, devLIfftw);
     epicsRegisterFunction(FFTW_input);
     epicsRegisterFunction(FFTW_init);
 }

@@ -29,6 +29,13 @@ record (ai, "$(P)$(R)exectime") {
   field(TPRO, "15")
 }
 
+record (longin, "$(P)$(R)execcount") {
+  field(DTYP, "FFTW")
+  field(INP, "@$(P) execcount")
+  field(SCAN, "I/O Intr")
+  field(TPRO, "15")
+}
+
 record (aao, "$(P)$(R)inp-real") {
   field(DTYP, "FFTW")
   field(OUT, "@$(P) input-real trigger=y")

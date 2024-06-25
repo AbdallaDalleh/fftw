@@ -31,6 +31,13 @@ record (ai, "$(P)$(R)exectime") {
   field(TPRO, "15")
 }
 
+record (longin, "$(P)$(R)execcount") {
+  field(DTYP, "FFTW")
+  field(INP, "@$(P) execcount")
+  field(SCAN, "I/O Intr")
+  field(TPRO, "15")
+}
+
 record (aai, "$(P)$(R)inp-real") {
   field(FTVL, "DOUBLE")
   field(NELM, "$(TIME_N)")

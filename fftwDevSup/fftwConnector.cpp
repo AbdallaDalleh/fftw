@@ -43,6 +43,7 @@ FFTWConnector::get_ioint(int cmd, dbCommon *prec, IOSCANPVT *io)
     case OutputMagn:
     case OutputPhas:
     case ExecutionTime:
+    case ExecutionCount:
         *io = inst->valueScan;
         return 0;
     case OutputFscale:
@@ -143,6 +144,12 @@ double
 FFTWConnector::getRuntime()
 {
     return runtime;
+}
+
+int
+FFTWConnector::getExecutionCount()
+{
+    return inst->getCount();
 }
 
 void

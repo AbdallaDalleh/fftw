@@ -26,11 +26,14 @@ class TestFFTW(unittest.TestCase):
         inp = PV('A1:inp-real')
         outr = PV('A1:out-real', callback=data_callback)
         outi = PV('A1:out-imag', callback=data_callback)
+        count = PV('A1:execcount')
 
         while not all([real_is_in, imag_is_in]):
             time.sleep(0.001)
         real_is_in = False
         imag_is_in = False
+
+        self.assertEqual(count.get(), 0)
 
         wintype.put('None', wait=True)
         inp.put(data, wait=True)
@@ -42,6 +45,7 @@ class TestFFTW(unittest.TestCase):
 
         self.assertTrue(np.allclose(result.imag, outi.get()))
         self.assertTrue(np.allclose(result.real, outr.get()))
+        self.assertEqual(count.get(), 1)
 
     def test_1ke_1sine(self):
         """
@@ -62,10 +66,14 @@ class TestFFTW(unittest.TestCase):
         inp = PV('A2:inp-real')
         outr = PV('A2:out-real', callback=data_callback)
         outi = PV('A2:out-imag', callback=data_callback)
+        count = PV('A2:execcount')
+
         while not all([real_is_in, imag_is_in]):
             time.sleep(0.001)
         real_is_in = False
         imag_is_in = False
+
+        self.assertEqual(count.get(), 0)
 
         wintype.put('None', wait=True)
         inp.put(data, wait=True)
@@ -77,6 +85,7 @@ class TestFFTW(unittest.TestCase):
 
         self.assertTrue(np.allclose(result.imag, outi.get()))
         self.assertTrue(np.allclose(result.real, outr.get()))
+        self.assertEqual(count.get(), 1)
 
     def test_1ke_asub_1sine(self):
         """
@@ -97,10 +106,14 @@ class TestFFTW(unittest.TestCase):
         inp = PV('A3:inp-real')
         outr = PV('A3:out-real', callback=data_callback)
         outi = PV('A3:out-imag', callback=data_callback)
+        count = PV('A3:execcount')
+
         while not all([real_is_in, imag_is_in]):
             time.sleep(0.001)
         real_is_in = False
         imag_is_in = False
+
+        self.assertEqual(count.get(), 0)
 
         wintype.put('None', wait=True)
         inp.put(data, wait=True)
@@ -112,6 +125,7 @@ class TestFFTW(unittest.TestCase):
 
         self.assertTrue(np.allclose(result.imag, outi.get()))
         self.assertTrue(np.allclose(result.real, outr.get()))
+        self.assertEqual(count.get(), 1)
 
     def test_asub_issue001(self):
         """
