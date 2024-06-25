@@ -92,3 +92,13 @@ the size of the input.
 
 Execution time of the last transformation \[s\].
 Used with an ai record.
+
+### execcount
+
+Current value of the execution counter.
+Used with an longin record.
+
+Careful: An epicsAtomic (int) is used internally.
+This counter will run over at MAX_INT,
+which needs to be taken into account
+when using it to create "alive" status.
