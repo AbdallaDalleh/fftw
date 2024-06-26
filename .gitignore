@@ -22,10 +22,7 @@ envPaths
 /*Top/configure/*.local
 
 O.*/
-/QtC-*
-/.qtc_*
 *.orig
 *.log
 *.pyc
-.idea/
 venv/
