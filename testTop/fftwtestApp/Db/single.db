@@ -18,7 +18,7 @@ record (mbbo, "$(P)$(R)wintype") {
 record (ao, "$(P)$(R)fsample") {
   field(DTYP, "FFTW")
   field(OUT, "@$(P) sample-freq")
-  field(VAL, "1e3")
+  field(VAL, "$(F=1e3)")
   field(PINI, "YES")
 }
 
@@ -39,6 +39,8 @@ record (longin, "$(P)$(R)execcount") {
 record (aao, "$(P)$(R)inp-real") {
   field(DTYP, "FFTW")
   field(OUT, "@$(P) input-real trigger=y")
+  field(DOL, "$(IN) CP")
+  field(OMSL, "closed_loop")
   field(FTVL, "DOUBLE")
   field(NELM, "$(TIME_N)")
   field(TPRO, "15")

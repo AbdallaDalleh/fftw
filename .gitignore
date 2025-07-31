@@ -26,3 +26,4 @@ O.*/
 *.log
 *.pyc
 venv/
+.iocsh_history
